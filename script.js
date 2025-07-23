@@ -57,13 +57,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Close menu when a navigation link is clicked
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                // We add a small delay to ensure the scroll happens smoothly
-                // before the menu disappears completely.
+            // THE FIX IS IN THIS BLOCK
+            link.addEventListener('click', function(e) {
+                // Prevent the browser's default jump-to-anchor behavior
+                e.preventDefault();
+                
+                // First, close the mobile menu if it's open
                 closeMenu();
                 
-                // Smooth scroll to section (original functionality)
-                const targetId = link.getAttribute('href');
+                // Then, smoothly scroll to the target section
+                const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     targetElement.scrollIntoView({
